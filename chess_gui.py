@@ -51,8 +51,8 @@ if 'engine_loaded' not in st.session_state: st.session_state.engine_loaded = Fal
 with st.sidebar:
     st.header("⚙️ Engine Settings")
     
-    # 🔥 DEBUG SECTION - Shows what's happening
-    with st.expander("🔍 Debug Info (Click to expand)"):
+    # 🔥 DEBUG SECTION
+    with st.expander("🔍 Debug Info"):
         st.write(f"**OS:** {platform.system()}")
         st.write(f"**Working Directory:** {os.getcwd()}")
         st.write(f"**Files in folder:**")
@@ -69,10 +69,10 @@ with st.sidebar:
         else:
             st.error("❌ chessV5_GUI NOT found!")
         
-        if os.path.exists("chess_engine.cpp"):
-            st.success("✅ chess_engine.cpp found!")
+        if os.path.exists("chessV5_GUI.cpp"):
+            st.success("✅ chessV5_GUI.cpp found!")
         else:
-            st.error("❌ chess_engine.cpp NOT found!")
+            st.error("❌ chessV5_GUI.cpp NOT found!")
     
     # Auto-detect engine path
     if platform.system() == "Windows":
@@ -99,7 +99,12 @@ with st.sidebar:
             st.session_state.engine = None
             st.session_state.engine_loaded = False
     
-    st.success("🟢 Running") if st.session_state.engine_loaded else st.error("🔴 Stopped")
+    # 🔥 FIXED: Proper if/else instead of inline
+    if st.session_state.engine_loaded:
+        st.success("🟢 Running")
+    else:
+        st.error("🔴 Stopped")
+    
     st.divider()
     
     st.header("🎮 Controls")
