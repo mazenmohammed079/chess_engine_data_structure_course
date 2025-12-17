@@ -3,6 +3,7 @@ import subprocess
 import chess
 import chess.svg
 import re
+import platform
 
 class CustomChessEngine:
     def __init__(self, engine_path):
@@ -71,8 +72,14 @@ with st.sidebar:
     st.header("⚙️ Engine Settings")
     
     # Default path
-    default_path = r"D:\VS Code\cpp\chess\chessV5_GUI.exe"
+    if platform.system() == "Windows":
+        default_path = r"D:\VS Code\cpp\chess\chessV5_GUI.exe"
+    else:
+        default_path = "./chessV5_GUI"
+    
     engine_path = st.text_input("Engine Path", default_path)
+    
+    col1, col2 = st.columns(2)
     
     if st.button("🚀 Load Engine", use_container_width=True):
         try:
@@ -194,4 +201,5 @@ with col2:
 
 # Footer
 st.divider()
+
 st.caption("🎮 Chess Engine GUI | Made with Streamlit & C++")
